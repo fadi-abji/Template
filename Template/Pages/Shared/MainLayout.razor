@@ -1,0 +1,21 @@
+﻿@using Markdig.Syntax
+@inherits LayoutComponentBase
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @Body
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    &copy; 2024 - RazorBlazorTemplate - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    @(new MarkupString(Markdig.Markdown.ToHtml(_footerText)))
+</div>
+
+
+@code {
+    private string _footerText = "This is **Markdown**";
+}
