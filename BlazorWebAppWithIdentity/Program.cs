@@ -48,6 +48,14 @@ namespace BlazorWebAppWithIdentity
 
             var app = builder.Build();
 
+            // Seed data
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                SeedData.Initialize(services);
+            }
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
