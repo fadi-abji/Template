@@ -11,10 +11,14 @@
 
 <h1>Index</h1>
 <p>
-   @*  <form action="/movies" data-enhance data-permanent>
+
+    @*  ++++++++++++++++++ Client filtering ++++++++++++++++++*@
+   @*   <form action="/movies" data-enhance data-permanent>
         <input type="search" name="titleFilter" />
         <input type="submit" value="Search" />
-    </form> *@
+    </form>  *@
+
+    @*  ++++++++++++++++++ Server filtering ++++++++++++++++++*@
     <input type="search" @bind="titleFilter" @bind:event="oninput" />
 </p>
 
@@ -38,15 +42,21 @@
 <Paginator State="pagination" />
 
 @code {
+    // ++++++++++++++ client filtering +++++++++++++++++++
     // [SupplyParameterFromQuery]
     // private string? TitleFilter { get; set; }
 
     // private IQueryable<Movie> FilteredMovies =>
     //    context.Movie.Where(m => m.Title!.Contains(TitleFilter ?? string.Empty));
+
+    //==============================================================================
+    // +++++++++++++ server filtering ++++++++++++++++++++
     private string titleFilter = string.Empty;
 
     private IQueryable<Movie> FilteredMovies =>
         context.Movie.Where(m => m.Title!.Contains(titleFilter));
+    //==============================================================================
+
 
     private ApplicationDbContext context = default!;
 
