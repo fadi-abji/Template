@@ -1,6 +1,8 @@
-﻿using BlazorWebAppWithIdentity.Components;
+﻿using AutoMapper;
+using BlazorWebAppWithIdentity.Components;
 using BlazorWebAppWithIdentity.Components.Account;
 using BlazorWebAppWithIdentity.Data;
+using BlazorWebAppWithIdentity.Profiles;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +47,13 @@ namespace BlazorWebAppWithIdentity
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+            //Mapper
+            IMapper mapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MovieProfile());
+            }).CreateMapper();
+            builder.Services.AddSingleton(mapper);
 
             var app = builder.Build();
 
