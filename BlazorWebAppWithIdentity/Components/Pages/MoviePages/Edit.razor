@@ -1,8 +1,9 @@
-﻿@* @page "/movies/edit"
-@    using Microsoft.EntityFrameworkCore
-@    using BlazorWebAppWithIdentity.Models;
-    using BlazorWebAppWithIdentity.Models.Dto
-@inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory
+﻿@page "/movies/edit"
+@using Core.Movie.Interfaces
+@using Microsoft.EntityFrameworkCore
+@using Core.Movie.Dtos
+@* @inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory *@
+@inject IMovieApi movieApi
 @inject NavigationManager NavigationManager
 
 <PageTitle>Edit</PageTitle>
@@ -67,8 +68,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        using var context = DbFactory.CreateDbContext();
-        Movie ??= await context.Movie.FirstOrDefaultAsync(m => m.Id == Id);
+        Movie ??= await movieApi.GetMovieById(Id);
 
         if (Movie is null)
         {
@@ -76,36 +76,17 @@ else
         }
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task UpdateMovie()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Attach(Movie!).State = EntityState.Modified;
-
         try
         {
-            await context.SaveChangesAsync();
+            await movieApi.UpdateMovie(Movie!);
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!MovieExists(Movie!.Id))
-            {
-                NavigationManager.NavigateTo("notfound");
-            }
-            else
-            {
-                throw;
-            }
+           NavigationManager.NavigateTo("notfound");
         }
-
+        
         NavigationManager.NavigateTo("/movies");
     }
-
-    private bool MovieExists(int id)
-    {
-        using var context = DbFactory.CreateDbContext();
-        return context.Movie.Any(e => e.Id == id);
-    }
 }
- *@

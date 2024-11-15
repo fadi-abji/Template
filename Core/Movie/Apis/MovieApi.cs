@@ -22,5 +22,15 @@ namespace Core.Movie.Apis
         {
             return await _httpClient.GetFromJsonAsync<List<Dtos.Movie>>($"Data/Movie/GetAllMovies");
         }
+
+        public async Task<Dtos.Movie> GetMovieById(int id)
+        {
+            return await _httpClient.GetFromJsonAsync<Dtos.Movie>($"Data/Movie/GetMovieById{id}");
+        }
+
+        public async Task UpdateMovie(Dtos.Movie movie)
+        {
+            await _httpClient.PutAsJsonAsync<Dtos.Movie>($"Data/Movie/UpdateMovie", movie);
+        }
     }
 }

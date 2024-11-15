@@ -45,5 +45,52 @@ namespace Business.Movie.Services
                 throw ex;
             }
         }
+
+        public async Task<Core.Movie.Dtos.Movie?> GetMovieById(int id)
+        {
+            try
+            {
+                var context = dbFactory.CreateDbContext();
+                var movieDal = context.Movie.FirstOrDefault(x => x.Id == id);
+                return movieDal == null ? null : dataTranslationService.MapData<Core.Movie.Dtos.Movie, Dal.Models.Movie>(movieDal);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task UpdateMovie(Core.Movie.Dtos.Movie movie)
+        {
+            using var context = dbFactory.CreateDbContext();
+            //convert to Dal
+            var movieDal = dataTranslationService.ReverseMapData<Dal.Models.Movie, Core.Movie.Dtos.Movie>(movie);
+            context.Attach(movieDal!).State = EntityState.Modified;
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MovieExists(movie!.Id))
+                {
+                    throw new DbUpdateConcurrencyException("Movie not found");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private bool MovieExists(int id)
+        {
+            using var context = dbFactory.CreateDbContext();
+            return context.Movie.Any(e => e.Id == id);
+        }
     }
 }

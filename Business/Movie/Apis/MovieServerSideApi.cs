@@ -20,5 +20,15 @@ namespace Business.Movie.Apis
         {
             return movieService.GetAllMovies();
         }
+
+        public Task<Core.Movie.Dtos.Movie?> GetMovieById(int id)
+        {
+            return movieService.GetMovieById(id);
+        }
+
+        public Task UpdateMovie(Core.Movie.Dtos.Movie movie)
+        {
+            return movieService.UpdateMovie(movie);
+        }
     }
 }
