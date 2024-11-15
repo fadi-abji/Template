@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using BlazorWebAppWithIdentity.Components;
 using BlazorWebAppWithIdentity.Components.Account;
-using BlazorWebAppWithIdentity.Profiles;
 using Business.DataBase;
 using Business.Movie.Apis;
 using Business.Movie.Interfaces;
 using Business.Movie.Services;
+using Business.Profiles;
 using Core.Movie.Interfaces;
 using Dal.Data;
 using Microsoft.AspNetCore.Components.Authorization;
