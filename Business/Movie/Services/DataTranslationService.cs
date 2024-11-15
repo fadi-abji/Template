@@ -14,14 +14,6 @@ namespace Business.Movie.Services
                          cfg.AddProfile(new MovieProfile());
                      }).CreateMapper();
         }
-
-        //Mapper
-
-        //public Core.Movie.Dtos.Movie MapData(Dal.Models.Movie source)
-        //{
-        //    return mapper.Map<Core.Movie.Dtos.Movie>(source);
-        //}
-
         public List<TDto> MapData<TDto, TDal>(List<TDal> source)
         {
             return mapper.Map<List<TDto>>(source);
@@ -30,7 +22,6 @@ namespace Business.Movie.Services
         {
             return mapper.Map<TDto>(source);
         }
-
         public TDal ReverseMapData<TDal, TDto>(TDto source)
         {
             return mapper.Map<TDal>(source);
