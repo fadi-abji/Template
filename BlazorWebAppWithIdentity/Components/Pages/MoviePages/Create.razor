@@ -1,10 +1,13 @@
-﻿@* @page "/movies/create"
+﻿@page "/movies/create"
+@using Core.Movie.Apis
+@using Core.Movie.Interfaces
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
-@using BlazorWebAppWithIdentity.Models.Dto;
-@inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory
+@using Core.Movie.Dtos;
+@* @inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory *@
+@inject IMovieApi movieApi
 @inject NavigationManager NavigationManager
-@attribute [Authorize(Roles = "Admin")]
+@* @attribute [Authorize(Roles = "Admin")] *@
 
 <PageTitle>Create</PageTitle>
 
@@ -61,7 +64,7 @@
         // using var context = DbFactory.CreateDbContext();
         // context.Movie.Add(Movie);
         //await context.SaveChangesAsync();
+        await movieApi.AddMovie(Movie);
         NavigationManager.NavigateTo("/movies");
     }
 }
- *@

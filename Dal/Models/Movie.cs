@@ -6,8 +6,8 @@ namespace Dal.Models
     public class Movie
     {
         public int Id { get; set; }
-
-        //public Guid Uid { get; set; }
+        public Guid Uid { get; set; }
+        public string Origine { get; set; }
 
         [Required]
         [StringLength(60, MinimumLength = 3)]

@@ -10,6 +10,12 @@ namespace Business.Movie.Apis
         {
             this.movieService = movieService;
         }
+
+        public Task AddMovie(Core.Movie.Dtos.Movie movie)
+        {
+            return movieService.AddMovie(movie);
+        }
+
         public Task<List<Core.Movie.Dtos.Movie>> GetAllMovies()
         {
             return movieService.GetAllMovies();

@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using BlazorWebAppWithIdentity.Components;
+﻿using BlazorWebAppWithIdentity.Components;
 using BlazorWebAppWithIdentity.Components.Account;
 using Business.DataBase;
 using Business.Movie.Apis;
 using Business.Movie.Interfaces;
 using Business.Movie.Services;
-using Business.Profiles;
 using Core.Movie.Interfaces;
 using Dal.Data;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -39,7 +37,7 @@ namespace BlazorWebAppWithIdentity
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             //Changed AddDbContext the default one to AddDbContextFactory After scaffolding
-            builder.Services.AddDbContextFactory<ApplicationDbContext>(options =>
+            builder.Services.AddDbContextFactory<MainDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddQuickGridEntityFrameworkAdapter();
@@ -47,7 +45,7 @@ namespace BlazorWebAppWithIdentity
 
             //this added default identity when create a new project with individual user accounts
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<MainDbContext>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
@@ -56,12 +54,7 @@ namespace BlazorWebAppWithIdentity
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddTransient<IMovieApi, MovieServerSideApi>();
 
-            //Mapper
-            IMapper mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MovieProfile());
-            }).CreateMapper();
-            builder.Services.AddSingleton(mapper);
+
 
             var app = builder.Build();
 

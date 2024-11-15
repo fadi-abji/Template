@@ -3,5 +3,6 @@
     public interface IMovieService
     {
         Task<List<Core.Movie.Dtos.Movie>> GetAllMovies();
+        Task AddMovie(Core.Movie.Dtos.Movie movie);
     }
 }
