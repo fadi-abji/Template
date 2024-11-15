@@ -1,14 +1,13 @@
-﻿using BlazorWebAppWithIdentity.Criterias;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazorWebAppWithIdentity.Models.Dal
+namespace Dal.Models
 {
-    public class Movie : IObject
+    public class Movie
     {
         public int Id { get; set; }
 
-        public Guid Uid { get; set; }
+        //public Guid Uid { get; set; }
 
         [Required]
         [StringLength(60, MinimumLength = 3)]
@@ -29,9 +28,5 @@ namespace BlazorWebAppWithIdentity.Models.Dal
         [Required]
         [RegularExpression(@"^(G|PG|PG-13|R|NC-17)$")]
         public string? Rating { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public int CreatedBy { get; set; }
-        public DateTime ChangedAt { get; set; }
-        public int ChangedBy { get; set; }
     }
 }

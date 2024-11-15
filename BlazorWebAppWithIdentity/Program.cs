@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
 using BlazorWebAppWithIdentity.Components;
 using BlazorWebAppWithIdentity.Components.Account;
-using BlazorWebAppWithIdentity.Data;
 using BlazorWebAppWithIdentity.Profiles;
+using Business.DataBase;
+using Business.Movie.Apis;
+using Business.Movie.Interfaces;
+using Business.Movie.Services;
+using Core.Movie.Interfaces;
+using Dal.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +51,10 @@ namespace BlazorWebAppWithIdentity
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            //builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddScoped<DataTranslationService>();
+            builder.Services.AddScoped<IMovieService, MovieService>();
+            builder.Services.AddTransient<IMovieApi, MovieServerSideApi>();
 
             //Mapper
             IMapper mapper = new MapperConfiguration(cfg =>

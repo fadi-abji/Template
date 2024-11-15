@@ -1,4 +1,4 @@
-﻿namespace BlazorWebAppWithIdentity.Models.Dto
+﻿namespace Core.Movie.Dtos
 {
     public class Rating
     {

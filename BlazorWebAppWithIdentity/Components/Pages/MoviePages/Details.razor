@@ -1,8 +1,8 @@
-﻿@page "/movies/details"
+﻿@* @page "/movies/details"
 @    using Microsoft.EntityFrameworkCore
 @    using BlazorWebAppWithIdentity.Models;
     using BlazorWebAppWithIdentity.Models.Dto
-@inject IDbContextFactory<BlazorWebAppWithIdentity.Data.ApplicationDbContext> DbFactory
+@inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Details</PageTitle>
@@ -53,3 +53,4 @@
         }
     }
 }
+ *@

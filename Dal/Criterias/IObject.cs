@@ -1,4 +1,4 @@
-﻿namespace BlazorWebAppWithIdentity.Criterias
+﻿namespace Dal.Criterias
 {
     public interface IObject
     {

@@ -1,6 +1,6 @@
 using BlazorWebAppWithIdentity.Components.Account.Pages;
 using BlazorWebAppWithIdentity.Components.Account.Pages.Manage;
-using BlazorWebAppWithIdentity.Data;
+using Dal.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;

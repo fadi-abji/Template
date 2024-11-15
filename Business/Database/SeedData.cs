@@ -1,7 +1,9 @@
-﻿using BlazorWebAppWithIdentity.Models;
+﻿using Business.DataBase;
+using Dal.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace BlazorWebAppWithIdentity.Data
+namespace Dal.Data
 {
     public class SeedData
     {

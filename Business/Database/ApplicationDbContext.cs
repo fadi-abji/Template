@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Dal.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlazorWebAppWithIdentity.Data
+namespace Business.DataBase
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {
-        public DbSet<Models.Dal.Movie> Movie { get; set; } = default!;
+        public DbSet<Dal.Models.Movie> Movie { get; set; } = default!;
     }
 }

@@ -1,10 +1,9 @@
 ﻿@page "/movies"
-@    using Microsoft.EntityFrameworkCore
-@    using Microsoft.AspNetCore.Components.QuickGrid
-@    using BlazorWebAppWithIdentity.Models
-@    using BlazorWebAppWithIdentity.Data
-@implements IAsyncDisposable
-@inject IDbContextFactory<BlazorWebAppWithIdentity.Data.ApplicationDbContext> DbFactory
+@using Core.Movie.Interfaces
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@* @implements IAsyncDisposable *@
+@inject IMovieApi movieApi
 @rendermode RenderMode.InteractiveServer
 
 <PageTitle>Index</PageTitle>
@@ -51,21 +50,30 @@
 
     //==============================================================================
     // +++++++++++++ server filtering ++++++++++++++++++++
-    private string titleFilter = string.Empty;
+    // private string titleFilter = string.Empty;
 
-    private IQueryable<Movie> FilteredMovies =>
-        context.Movie.Where(m => m.Title!.Contains(titleFilter));
+    // private IQueryable<Movie> FilteredMovies =>
+    //     context.Movie.Where(m => m.Title!.Contains(titleFilter));
     //==============================================================================
 
+    private string titleFilter = string.Empty;
 
-    private ApplicationDbContext context = default!;
+    private IQueryable<Core.Movie.Dtos.Movie> FilteredMovies
+    {
+        get
+        {
+            return movies.AsQueryable().Where(m => m.Title!.Contains(titleFilter));
+        }
+    }
+
+    private List<Core.Movie.Dtos.Movie> movies = new List<Core.Movie.Dtos.Movie>();
 
     private PaginationState pagination = new PaginationState { ItemsPerPage = 2 };
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        context = DbFactory.CreateDbContext();
+        movies = (await movieApi.GetAllMovies());
     }
 
-    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+    //public async ValueTask DisposeAsync() => await movies.DisposeAsync();
 }

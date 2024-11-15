@@ -1,8 +1,8 @@
-﻿@page "/movies/edit"
+﻿@* @page "/movies/edit"
 @    using Microsoft.EntityFrameworkCore
 @    using BlazorWebAppWithIdentity.Models;
     using BlazorWebAppWithIdentity.Models.Dto
-@inject IDbContextFactory<BlazorWebAppWithIdentity.Data.ApplicationDbContext> DbFactory
+@inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Edit</PageTitle>
@@ -108,3 +108,4 @@ else
         return context.Movie.Any(e => e.Id == id);
     }
 }
+ *@

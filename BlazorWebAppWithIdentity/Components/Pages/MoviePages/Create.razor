@@ -1,8 +1,8 @@
-﻿@page "/movies/create"
+﻿@* @page "/movies/create"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using BlazorWebAppWithIdentity.Models.Dto;
-@inject IDbContextFactory<BlazorWebAppWithIdentity.Data.ApplicationDbContext> DbFactory
+@inject IDbContextFactory<Dal.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 @attribute [Authorize(Roles = "Admin")]
 
@@ -64,3 +64,4 @@
         NavigationManager.NavigateTo("/movies");
     }
 }
+ *@

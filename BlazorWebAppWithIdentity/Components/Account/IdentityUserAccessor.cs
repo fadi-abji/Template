@@ -1,4 +1,4 @@
-using BlazorWebAppWithIdentity.Data;
+using Dal.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace BlazorWebAppWithIdentity.Components.Account

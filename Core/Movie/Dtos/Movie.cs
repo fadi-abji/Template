@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazorWebAppWithIdentity.Models.Dto
+namespace Core.Movie.Dtos
 {
     public class Movie
     {
