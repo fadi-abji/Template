@@ -1,8 +1,7 @@
 ﻿@page "/movies/create"
-@    using Microsoft.AspNetCore.Authorization
-@    using Microsoft.EntityFrameworkCore
-@    using BlazorWebAppWithIdentity.Models;
-    using BlazorWebAppWithIdentity.Models.Dto
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using BlazorWebAppWithIdentity.Models.Dto;
 @inject IDbContextFactory<BlazorWebAppWithIdentity.Data.ApplicationDbContext> DbFactory
 @inject NavigationManager NavigationManager
 @attribute [Authorize(Roles = "Admin")]
@@ -59,9 +58,9 @@
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddMovie()
     {
-        using var context = DbFactory.CreateDbContext();
-        context.Movie.Add(Movie);
-        await context.SaveChangesAsync();
+        // using var context = DbFactory.CreateDbContext();
+        // context.Movie.Add(Movie);
+        //await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/movies");
     }
 }
