@@ -49,7 +49,7 @@ namespace BlazorWebAppWithIdentity
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
-            //builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
             builder.Services.AddScoped<DataTranslationService>();
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddTransient<IMovieApi, MovieServerSideApi>();
