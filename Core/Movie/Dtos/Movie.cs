@@ -29,5 +29,8 @@ namespace Core.Movie.Dtos
         [Required]
         [RegularExpression(@"^(G|PG|PG-13|R|NC-17)$")]
         public string? Rating { get; set; }
+
+        public List<MovieMedia> MovieMedias { get; set; }
+
     }
 }

@@ -19,9 +19,11 @@ namespace Business.Movie.Services
         {
             try
             {
+
                 using var context = dbFactory.CreateDbContext();
                 //convert to Dal
                 var movieDal = dataTranslationService.ReverseMapData<Dal.Models.Movie, Core.Movie.Dtos.Movie>(movie);
+
                 context.Movie.Add(movieDal);
                 await context.SaveChangesAsync();
             }

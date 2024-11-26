@@ -28,5 +28,7 @@ namespace Dal.Models
         [Required]
         [RegularExpression(@"^(G|PG|PG-13|R|NC-17)$")]
         public string? Rating { get; set; }
+
+        public ICollection<MovieMedia> MovieMedias { get; set; } = null;
     }
 }
