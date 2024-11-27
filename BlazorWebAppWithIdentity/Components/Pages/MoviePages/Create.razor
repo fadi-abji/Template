@@ -3,8 +3,9 @@
 @using Core.Movie.Interfaces
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
-@using Core.Movie.Dtos;
+@using Dto;
 @inject IMovieApi movieApi
+@inject IMediaApi mediaApi
 @inject NavigationManager NavigationManager
 
 <PageTitle>Create</PageTitle>
@@ -43,6 +44,11 @@
                 <InputText id="rating" @bind-Value="Movie.Rating" class="form-control" />
                 <ValidationMessage For="() => Movie.Rating" class="text-danger" />
             </div>
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload Media Files:</label>
+                <InputFile id="file" OnChange="HandleFileSelected" class="form-control" multiple/>
+                <ValidationMessage For="() => SelectedFiles" class="text-danger" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -55,11 +61,38 @@
 @code {
     [SupplyParameterFromForm]
     private Movie Movie { get; set; } = new();
+    private List<IBrowserFile> SelectedFiles { get; set; } = new();
+    private string uploadStatus;
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddMovie()
     {
+        Movie.MovieMedias = new List<MovieMedia>();
+
+        foreach (var file in SelectedFiles)
+        {
+            var mediaDto = await mediaApi.AddMedia(); 
+
+            var stream = file.OpenReadStream(maxAllowedSize: 5_000_00); // Example: 500KB max size
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            
+
+            Movie.MovieMedias.Add(new MovieMedia
+                {
+                    MovieId = Movie.Id,
+                    MediaUid = mediaDto.Uid.ToString() // create a new media with a unique identifier and put it here
+                });
+        }
+
+        // Call the API to save the movie and upload files
         await movieApi.AddMovie(Movie);
         NavigationManager.NavigateTo("/movies");
+    }
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        SelectedFiles = e.GetMultipleFiles().ToList(); // Capture multiple files
+        e.File.OpenReadStream(maxAllowedSize: 5_000_00); // Limit file size to 500KB
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Core.Movie.Dtos
+﻿namespace Dto
 {
     public class MovieMedia
     {

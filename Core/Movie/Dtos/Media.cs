@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Movie.Dtos
+namespace Dto
 {
-    class Media
+    public class Media
     {
         [Key]
         public Guid Uid { get; set; }

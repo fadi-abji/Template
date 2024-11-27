@@ -11,22 +11,22 @@ namespace Business.Movie.Apis
             this.movieService = movieService;
         }
 
-        public Task AddMovie(Core.Movie.Dtos.Movie movie)
+        public Task AddMovie(Dto.Movie movie)
         {
             return movieService.AddMovie(movie);
         }
 
-        public Task<List<Core.Movie.Dtos.Movie>> GetAllMovies()
+        public Task<List<Dto.Movie>> GetAllMovies()
         {
             return movieService.GetAllMovies();
         }
 
-        public Task<Core.Movie.Dtos.Movie?> GetMovieById(int id)
+        public Task<Dto.Movie?> GetMovieById(int id)
         {
             return movieService.GetMovieById(id);
         }
 
-        public Task UpdateMovie(Core.Movie.Dtos.Movie movie)
+        public Task UpdateMovie(Dto.Movie movie)
         {
             return movieService.UpdateMovie(movie);
         }

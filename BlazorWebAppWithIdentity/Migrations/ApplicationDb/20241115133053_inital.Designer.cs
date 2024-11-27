@@ -90,7 +90,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Dal.Models.Movie", b =>
+            modelBuilder.Entity("Dal.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

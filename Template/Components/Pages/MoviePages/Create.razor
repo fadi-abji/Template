@@ -1,6 +1,6 @@
 ﻿@page "/movies/create"
 @using Microsoft.EntityFrameworkCore
-@using Dal.Models
+@using Dal
 @inject IDbContextFactory<Business.DataBase.MainDbContext> DbFactory
 @inject NavigationManager NavigationManager
 
@@ -39,7 +39,11 @@
                 <label for="rating" class="form-label">Rating:</label> 
                 <InputText id="rating" @bind-Value="Movie.Rating" class="form-control" aria-required="true"/> 
                 <ValidationMessage For="() => Movie.Rating" class="text-danger" /> 
-            </div>        
+            </div>
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload File:</label>
+                <InputFile id="file" OnChange="HandleFileSelected" class="form-control" />
+            </div>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -60,5 +64,20 @@
         context.Movie.Add(Movie);
         await context.SaveChangesAsync();
         NavigationManager.NavigateTo("/movies");
+    }
+
+    private IBrowserFile? SelectedFile { get; set; }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        // Get the selected file
+        SelectedFile = e.File;
+
+        // Optional: Validate file type, size, etc.
+        if (SelectedFile.ContentType != "image/jpeg" && SelectedFile.ContentType != "image/png")
+        {
+            // Example: Only allow images
+            throw new InvalidOperationException("Only JPEG or PNG images are supported.");
+        }
     }
 }

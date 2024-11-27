@@ -58,7 +58,7 @@
 
     private string titleFilter = string.Empty;
 
-    private IQueryable<Core.Movie.Dtos.Movie> FilteredMovies
+    private IQueryable<Dto.Movie> FilteredMovies
     {
         get
         {
@@ -66,7 +66,7 @@
         }
     }
 
-    private List<Core.Movie.Dtos.Movie> movies = new List<Core.Movie.Dtos.Movie>();
+    private List<Dto.Movie> movies = new List<Dto.Movie>();
 
     private PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
 

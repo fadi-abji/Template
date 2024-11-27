@@ -12,6 +12,7 @@ namespace Business.Movie.Services
             mapper = new MapperConfiguration(cfg =>
                      {
                          cfg.AddProfile(new MovieProfile());
+                         cfg.AddProfile(new MediaProfile());
                      }).CreateMapper();
         }
         public List<TDto> MapData<TDto, TDal>(List<TDal> source)

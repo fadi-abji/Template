@@ -12,8 +12,8 @@ namespace Business.DataBase
             base.OnModelCreating(modelBuilder);
             // Define shared configurations
         }
-        public DbSet<Dal.Models.Movie> Movie { get; set; }
-        public DbSet<Dal.Models.Media> Media { get; set; }
-        public DbSet<Dal.Models.MovieMedia> MovieMedia { get; set; }
+        public DbSet<Dal.Movie> Movie { get; set; }
+        public DbSet<Dal.Media> Media { get; set; }
+        public DbSet<Dal.MovieMedia> MovieMedia { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241127095201_media2")]
-    partial class media2
+    [Migration("20241127104606_moviemedianavproperties")]
+    partial class moviemedianavproperties
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,19 +197,21 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
 
             modelBuilder.Entity("Dal.MovieMedia", b =>
                 {
-                    b.Property<Guid>("MediaUid")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("MediaUid1")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("MediaUid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.HasKey("MediaUid");
+                    b.HasKey("Id");
 
-                    b.HasIndex("MediaUid1");
+                    b.HasIndex("MediaUid");
 
                     b.HasIndex("MovieId");
 
@@ -364,7 +366,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                 {
                     b.HasOne("Dal.Media", "Media")
                         .WithMany("MovieMedias")
-                        .HasForeignKey("MediaUid1")
+                        .HasForeignKey("MediaUid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

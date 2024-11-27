@@ -1,5 +1,5 @@
 ﻿using Business.DataBase;
-using Dal.Models;
+using Dal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

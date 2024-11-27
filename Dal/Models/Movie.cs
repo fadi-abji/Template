@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Dal.Models
+namespace Dal
 {
     public class Movie
     {
@@ -30,6 +30,6 @@ namespace Dal.Models
         [RegularExpression(@"^(G|PG|PG-13|R|NC-17)$")]
         public string? Rating { get; set; }
 
-        public ICollection<MovieMedia> MovieMedias { get; set; } = null;
+        public virtual ICollection<MovieMedia> MovieMedias { get; set; } = null!;
     }
 }

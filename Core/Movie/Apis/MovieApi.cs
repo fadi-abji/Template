@@ -13,24 +13,24 @@ namespace Core.Movie.Apis
             _httpClient = httpClient;
         }
 
-        public async Task AddMovie(Dtos.Movie movie)
+        public async Task AddMovie(Dto.Movie movie)
         {
-            await _httpClient.PostAsJsonAsync<Dtos.Movie>($"Data/Movie/AddMovie", movie);
+            await _httpClient.PostAsJsonAsync<Dto.Movie>($"Data/Movie/AddMovie", movie);
         }
 
-        public async Task<List<Dtos.Movie>> GetAllMovies()
+        public async Task<List<Dto.Movie>> GetAllMovies()
         {
-            return await _httpClient.GetFromJsonAsync<List<Dtos.Movie>>($"Data/Movie/GetAllMovies");
+            return await _httpClient.GetFromJsonAsync<List<Dto.Movie>>($"Data/Movie/GetAllMovies");
         }
 
-        public async Task<Dtos.Movie> GetMovieById(int id)
+        public async Task<Dto.Movie> GetMovieById(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Dtos.Movie>($"Data/Movie/GetMovieById{id}");
+            return await _httpClient.GetFromJsonAsync<Dto.Movie>($"Data/Movie/GetMovieById{id}");
         }
 
-        public async Task UpdateMovie(Dtos.Movie movie)
+        public async Task UpdateMovie(Dto.Movie movie)
         {
-            await _httpClient.PutAsJsonAsync<Dtos.Movie>($"Data/Movie/UpdateMovie", movie);
+            await _httpClient.PutAsJsonAsync<Dto.Movie>($"Data/Movie/UpdateMovie", movie);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Business.Movie.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Core.Movie.Dtos.Movie>> GetAllMovies()
+        public async Task<IEnumerable<Dto.Movie>> GetAllMovies()
         {
             logger.LogTrace(string.Format("Data/Movie/GetAllMovies"));
             return await _movieService.GetAllMovies();

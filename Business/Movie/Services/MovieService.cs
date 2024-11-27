@@ -1,7 +1,9 @@
 ﻿using Business.DataBase;
 using Business.Movie.Interfaces;
+using Dto;
 using Microsoft.EntityFrameworkCore;
-
+using DalObj = Dal.Movie;
+using DtoObj = Dto.Movie;
 namespace Business.Movie.Services
 {
     public class MovieService : IMovieService
@@ -15,31 +17,38 @@ namespace Business.Movie.Services
             this.dataTranslationService = dataTranslationService;
         }
 
-        public async Task AddMovie(Core.Movie.Dtos.Movie movie)
+        public async Task AddMovie(DtoObj movie)
         {
+            using var context = dbFactory.CreateDbContext();
+            await using var transaction = await context.Database.BeginTransactionAsync();
             try
             {
+                // Convert DTO to DAL
+                var movieDal = dataTranslationService.ReverseMapData<DalObj, DtoObj>(movie);
 
-                using var context = dbFactory.CreateDbContext();
-                //convert to Dal
-                var movieDal = dataTranslationService.ReverseMapData<Dal.Models.Movie, Core.Movie.Dtos.Movie>(movie);
-
+                // Add the Movie entity
                 context.Movie.Add(movieDal);
+
+                // Save changes to include Movie ID for related entities
                 await context.SaveChangesAsync();
+
+                // Commit the transaction
+                await transaction.CommitAsync();
             }
             catch (Exception ex)
             {
-                throw;
+                await transaction.RollbackAsync();
+                throw ex;
             }
         }
 
-        public async Task<List<Core.Movie.Dtos.Movie>> GetAllMovies()
+        public async Task<List<DtoObj>> GetAllMovies()
         {
             try
             {
                 var context = dbFactory.CreateDbContext();
-                List<Dal.Models.Movie> listMovieDals = await context.Movie.ToListAsync();
-                var result = dataTranslationService.MapData<Core.Movie.Dtos.Movie, Dal.Models.Movie>(listMovieDals).ToList();
+                List<DalObj> listMovieDals = await context.Movie.ToListAsync();
+                var result = dataTranslationService.MapData<DtoObj, DalObj>(listMovieDals).ToList();
                 return result;
             }
             catch (Exception ex)
@@ -48,13 +57,13 @@ namespace Business.Movie.Services
             }
         }
 
-        public async Task<Core.Movie.Dtos.Movie?> GetMovieById(int id)
+        public async Task<DtoObj?> GetMovieById(int id)
         {
             try
             {
                 var context = dbFactory.CreateDbContext();
                 var movieDal = context.Movie.FirstOrDefault(x => x.Id == id);
-                return movieDal == null ? null : dataTranslationService.MapData<Core.Movie.Dtos.Movie, Dal.Models.Movie>(movieDal);
+                return movieDal == null ? null : dataTranslationService.MapData<DtoObj, DalObj>(movieDal);
             }
             catch (Exception)
             {
@@ -62,11 +71,11 @@ namespace Business.Movie.Services
             }
         }
 
-        public async Task UpdateMovie(Core.Movie.Dtos.Movie movie)
+        public async Task UpdateMovie(DtoObj movie)
         {
             using var context = dbFactory.CreateDbContext();
             //convert to Dal
-            var movieDal = dataTranslationService.ReverseMapData<Dal.Models.Movie, Core.Movie.Dtos.Movie>(movie);
+            var movieDal = dataTranslationService.ReverseMapData<DalObj, DtoObj>(movie);
             context.Attach(movieDal!).State = EntityState.Modified;
             try
             {
@@ -96,23 +105,17 @@ namespace Business.Movie.Services
         }
 
         #region MovieMedia
-        //public async Task AddMovieMedia(Core.Movie.Dtos.MovieMedia media)
-        //{
-        //    try
-        //    {
+        private async Task AddMovieMediaToMovie(MovieMedia media)
+        {
+            try
+            {
 
-        //        using var context = dbFactory.CreateDbContext();
-        //        //convert to Dal
-        //        var movieDal = dataTranslationService.ReverseMapData<Dal.Models.Movie, Core.Movie.Dtos.Movie>(media);
-
-        //        context.Movie.Add(movieDal);
-        //        await context.SaveChangesAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
         #endregion
     }
 }

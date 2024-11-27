@@ -87,7 +87,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Dal.Models.Media", b =>
+            modelBuilder.Entity("Dal.Media", b =>
                 {
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("Media");
                 });
 
-            modelBuilder.Entity("Dal.Models.MediaType", b =>
+            modelBuilder.Entity("Dal.MediaType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,7 +152,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("MediaType");
                 });
 
-            modelBuilder.Entity("Dal.Models.Movie", b =>
+            modelBuilder.Entity("Dal.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,21 +192,23 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("Movie");
                 });
 
-            modelBuilder.Entity("Dal.Models.MovieMedia", b =>
+            modelBuilder.Entity("Dal.MovieMedia", b =>
                 {
-                    b.Property<Guid>("MediaUid")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("MediaUid1")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("MediaUid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
-                    b.HasKey("MediaUid");
+                    b.HasKey("Id");
 
-                    b.HasIndex("MediaUid1");
+                    b.HasIndex("MediaUid");
 
                     b.HasIndex("MovieId");
 
@@ -346,9 +348,9 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Dal.Models.Media", b =>
+            modelBuilder.Entity("Dal.Media", b =>
                 {
-                    b.HasOne("Dal.Models.MediaType", "MediaType")
+                    b.HasOne("Dal.MediaType", "MediaType")
                         .WithMany("Media")
                         .HasForeignKey("MediaTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -357,15 +359,15 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.Navigation("MediaType");
                 });
 
-            modelBuilder.Entity("Dal.Models.MovieMedia", b =>
+            modelBuilder.Entity("Dal.MovieMedia", b =>
                 {
-                    b.HasOne("Dal.Models.Media", "Media")
+                    b.HasOne("Dal.Media", "Media")
                         .WithMany("MovieMedias")
-                        .HasForeignKey("MediaUid1")
+                        .HasForeignKey("MediaUid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dal.Models.Movie", "Movie")
+                    b.HasOne("Dal.Movie", "Movie")
                         .WithMany("MovieMedias")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -427,17 +429,17 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dal.Models.Media", b =>
+            modelBuilder.Entity("Dal.Media", b =>
                 {
                     b.Navigation("MovieMedias");
                 });
 
-            modelBuilder.Entity("Dal.Models.MediaType", b =>
+            modelBuilder.Entity("Dal.MediaType", b =>
                 {
                     b.Navigation("Media");
                 });
 
-            modelBuilder.Entity("Dal.Models.Movie", b =>
+            modelBuilder.Entity("Dal.Movie", b =>
                 {
                     b.Navigation("MovieMedias");
                 });

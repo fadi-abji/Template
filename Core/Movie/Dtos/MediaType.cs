@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Movie.Dtos
+namespace Dto
 {
     public class MediaType
     {

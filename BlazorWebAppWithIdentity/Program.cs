@@ -53,7 +53,10 @@ namespace BlazorWebAppWithIdentity
             builder.Services.AddScoped<DataTranslationService>();
             builder.Services.AddScoped<IMovieService, MovieService>();
             builder.Services.AddTransient<IMovieApi, MovieServerSideApi>();
+            builder.Services.AddScoped<IMediaService, MediaService>();
+            builder.Services.AddTransient<IMediaApi, MediaServerSideApi>();
 
+            builder.Services.AddHttpClient();
 
 
             var app = builder.Build();

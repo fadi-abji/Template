@@ -1,18 +1,34 @@
 ﻿using AutoMapper;
+using DalMedia = Dal.Media;
+using DalObje = Dal.Movie;
+using DtoMedia = Dto.Media;
+using DtoObje = Dto.Movie;
+using MovieMediaDal = Dal.MovieMedia;
+using MovieMediaDto = Dto.MovieMedia;
 namespace Business.Profiles
 {
     public class MovieProfile : Profile
     {
         public MovieProfile()
         {
-            CreateMap<Dal.Models.Movie, Core.Movie.Dtos.Movie>();
-            //.ForMember(dest => dest.Rating, src => src.MapFrom(o => o.Rating + " " + "rate"))
-            //.ForMember(dest => dest.ReleaseDate, src => src.MapFrom(o => o.ReleaseDate.ToString("yyyy/MM/dd")))
-            //.ForMember(dest => dest.Price, src => src.MapFrom(o => o.Price.ToString("C")));
+            // Map Movie DTO to DAL and reverse
+            CreateMap<DtoObje, DalObje>()
+                .ForMember(Dal => Dal.MovieMedias, Dto => Dto.MapFrom(o => o.MovieMedias))
+                .ReverseMap();
 
-            CreateMap<Core.Movie.Dtos.Movie, Dal.Models.Movie>()
-            .ForMember(dest => dest.Origine, src => src.MapFrom(o => "default value"))
-            .ForMember(dest => dest.Uid, src => src.MapFrom(o => Guid.NewGuid()));
+            // Map MovieMedia DTO to DAL and reverse
+            CreateMap<MovieMediaDto, MovieMediaDal>().ReverseMap();
+        }
+    }
+
+
+    public class MediaProfile : Profile
+    {
+        public MediaProfile()
+        {
+            // Map Media DTO to DAL and reverse
+            CreateMap<DtoMedia, DalMedia>()
+                .ReverseMap();
         }
     }
 }

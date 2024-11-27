@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dal.Models
+namespace Dal
 {
     public class Media
     {
@@ -16,6 +16,6 @@ namespace Dal.Models
         public string OriginalFilename { get; set; } = null!;
         public int? Width { get; set; }
         public int? Height { get; set; }
-        public ICollection<MovieMedia> MovieMedias { get; set; } = null!;
+        public virtual ICollection<MovieMedia> MovieMedias { get; set; } = null!;
     }
 }

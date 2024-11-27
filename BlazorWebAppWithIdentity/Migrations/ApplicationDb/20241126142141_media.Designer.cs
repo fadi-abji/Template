@@ -90,7 +90,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Dal.Models.Media", b =>
+            modelBuilder.Entity("Dal.Media", b =>
                 {
                     b.Property<Guid>("Uid")
                         .ValueGeneratedOnAdd()
@@ -101,7 +101,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("Media");
                 });
 
-            modelBuilder.Entity("Dal.Models.Movie", b =>
+            modelBuilder.Entity("Dal.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,7 +141,7 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("Movie");
                 });
 
-            modelBuilder.Entity("Dal.Models.MovieMedia", b =>
+            modelBuilder.Entity("Dal.MovieMedia", b =>
                 {
                     b.Property<Guid>("MediaUid")
                         .ValueGeneratedOnAdd()
@@ -295,15 +295,15 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Dal.Models.MovieMedia", b =>
+            modelBuilder.Entity("Dal.MovieMedia", b =>
                 {
-                    b.HasOne("Dal.Models.Media", "Media")
+                    b.HasOne("Dal.Media", "Media")
                         .WithMany("MovieMedias")
                         .HasForeignKey("MediaUid1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dal.Models.Movie", "Movie")
+                    b.HasOne("Dal.Movie", "Movie")
                         .WithMany("MovieMedias")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -365,12 +365,12 @@ namespace BlazorWebAppWithIdentity.Migrations.ApplicationDb
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dal.Models.Media", b =>
+            modelBuilder.Entity("Dal.Media", b =>
                 {
                     b.Navigation("MovieMedias");
                 });
 
-            modelBuilder.Entity("Dal.Models.Movie", b =>
+            modelBuilder.Entity("Dal.Movie", b =>
                 {
                     b.Navigation("MovieMedias");
                 });
