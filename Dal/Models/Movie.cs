@@ -5,6 +5,7 @@ namespace Dal.Models
 {
     public class Movie
     {
+        [Key]
         public int Id { get; set; }
         public Guid Uid { get; set; }
         public string Origine { get; set; }
