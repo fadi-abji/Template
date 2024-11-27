@@ -94,5 +94,25 @@ namespace Business.Movie.Services
             using var context = dbFactory.CreateDbContext();
             return context.Movie.Any(e => e.Id == id);
         }
+
+        #region MovieMedia
+        //public async Task AddMovieMedia(Core.Movie.Dtos.MovieMedia media)
+        //{
+        //    try
+        //    {
+
+        //        using var context = dbFactory.CreateDbContext();
+        //        //convert to Dal
+        //        var movieDal = dataTranslationService.ReverseMapData<Dal.Models.Movie, Core.Movie.Dtos.Movie>(media);
+
+        //        context.Movie.Add(movieDal);
+        //        await context.SaveChangesAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
+        #endregion
     }
 }
