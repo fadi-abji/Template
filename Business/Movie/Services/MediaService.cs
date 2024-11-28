@@ -1,6 +1,8 @@
 ﻿using Business.DataBase;
 using Business.Movie.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace Business.Movie.Services
 {
@@ -8,9 +10,11 @@ namespace Business.Movie.Services
     {
         private readonly IDbContextFactory<MainDbContext> dbFactory;
         private readonly DataTranslationService dataTranslationService;
+        private readonly IWebHostEnvironment _env;
 
         public MediaService(IDbContextFactory<MainDbContext> DbFactory, DataTranslationService dataTranslationService)
         {
+
             this.dbFactory = DbFactory;
             this.dataTranslationService = dataTranslationService;
         }

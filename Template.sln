@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorBlazorTemplate", "Temp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAppWithIdentity", "BlazorWebAppWithIdentity\BlazorWebAppWithIdentity.csproj", "{DB1D992C-A9A1-4F35-AC6C-EF0EA84AB8E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{54D107D8-5FF9-443F-B0DE-A4C695F6F00A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{54D107D8-5FF9-443F-B0DE-A4C695F6F00A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{4F340E5D-089A-4EB1-9118-ED8A8B90C888}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{4F340E5D-089A-4EB1-9118-ED8A8B90C888}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dal", "Dal\Dal.csproj", "{5D931A1E-F4D9-40D5-ADEC-532D67B7A5E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dal", "Dal\Dal.csproj", "{5D931A1E-F4D9-40D5-ADEC-532D67B7A5E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

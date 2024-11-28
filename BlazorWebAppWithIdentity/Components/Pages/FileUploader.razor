@@ -1,0 +1,25 @@
+﻿@inject ILogger<FileUploader> Logger
+@inject IWebHostEnvironment Environment
+@inject HttpClient Http
+@rendermode InteractiveServer
+
+<div class="mb-3">
+    <label for="file" class="form-label">Upload Media Files:</label>
+    <InputFile id="file" OnChange="HandleFileSelected" class="form-control" multiple />
+    <lable> Upload up to @maxAllowedFiles of up to @maxFileSize bytes:</lable>
+    <ValidationMessage For="() => SelectedFiles" class="text-danger" />
+
+    @if (isLoading)
+    {
+        <p>Uploading...</p>
+    }
+    else
+    {
+        @foreach (var file in SelectedFiles)
+        {
+            <ul>
+                <li>@file.Name</li> @* delete button or x button *@
+            </ul>
+        }
+    }
+</div>

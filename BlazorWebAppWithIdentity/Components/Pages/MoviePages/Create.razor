@@ -4,9 +4,12 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Dto;
+@using Microsoft.AspNetCore.Components.Forms
 @inject IMovieApi movieApi
 @inject IMediaApi mediaApi
 @inject NavigationManager NavigationManager
+
+@rendermode InteractiveServer
 
 <PageTitle>Create</PageTitle>
 
@@ -44,11 +47,7 @@
                 <InputText id="rating" @bind-Value="Movie.Rating" class="form-control" />
                 <ValidationMessage For="() => Movie.Rating" class="text-danger" />
             </div>
-            <div class="mb-3">
-                <label for="file" class="form-label">Upload Media Files:</label>
-                <InputFile id="file" OnChange="HandleFileSelected" class="form-control" multiple/>
-                <ValidationMessage For="() => SelectedFiles" class="text-danger" />
-            </div>
+            <FileUploader></FileUploader>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -62,7 +61,12 @@
     [SupplyParameterFromForm]
     private Movie Movie { get; set; } = new();
     private List<IBrowserFile> SelectedFiles { get; set; } = new();
-    private string uploadStatus;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
 
     // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
     private async Task AddMovie()
@@ -76,7 +80,7 @@
             var stream = file.OpenReadStream(maxAllowedSize: 5_000_00); // Example: 500KB max size
             using var memoryStream = new MemoryStream();
             await stream.CopyToAsync(memoryStream);
-            
+
 
             Movie.MovieMedias.Add(new MovieMedia
                 {
@@ -90,9 +94,5 @@
         NavigationManager.NavigateTo("/movies");
     }
 
-    private void HandleFileSelected(InputFileChangeEventArgs e)
-    {
-        SelectedFiles = e.GetMultipleFiles().ToList(); // Capture multiple files
-        e.File.OpenReadStream(maxAllowedSize: 5_000_00); // Limit file size to 500KB
-    }
+   
 }

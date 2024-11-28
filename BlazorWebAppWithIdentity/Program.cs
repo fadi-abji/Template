@@ -56,7 +56,9 @@ namespace BlazorWebAppWithIdentity
             builder.Services.AddScoped<IMediaService, MediaService>();
             builder.Services.AddTransient<IMediaApi, MediaServerSideApi>();
 
-            builder.Services.AddHttpClient();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSingleton(new HttpClient());
+
 
 
             var app = builder.Build();
@@ -89,6 +91,7 @@ namespace BlazorWebAppWithIdentity
 
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
+
 
             // Add additional endpoints required by the Identity /Account Razor components.
             app.MapAdditionalIdentityEndpoints();
