@@ -47,7 +47,8 @@
                 <InputText id="rating" @bind-Value="Movie.Rating" class="form-control" />
                 <ValidationMessage For="() => Movie.Rating" class="text-danger" />
             </div>
-            <FileUploader></FileUploader>
+            @* <FileUploader></FileUploader> *@
+            <BlazorWebAppWithIdentity.AppComponents.FileUpload2 @rendermode="InteractiveServer"/>
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -73,21 +74,21 @@
     {
         Movie.MovieMedias = new List<MovieMedia>();
 
-        foreach (var file in SelectedFiles)
-        {
-            var mediaDto = await mediaApi.AddMedia(); 
+        // foreach (var file in SelectedFiles)
+        // {
+        //     var mediaDto = await mediaApi.AddMedia(); 
 
-            var stream = file.OpenReadStream(maxAllowedSize: 5_000_00); // Example: 500KB max size
-            using var memoryStream = new MemoryStream();
-            await stream.CopyToAsync(memoryStream);
+        //     var stream = file.OpenReadStream(maxAllowedSize: 5_000_00); // Example: 500KB max size
+        //     using var memoryStream = new MemoryStream();
+        //     await stream.CopyToAsync(memoryStream);
 
 
-            Movie.MovieMedias.Add(new MovieMedia
-                {
-                    MovieId = Movie.Id,
-                    MediaUid = mediaDto.Uid.ToString() // create a new media with a unique identifier and put it here
-                });
-        }
+        //     Movie.MovieMedias.Add(new MovieMedia
+        //         {
+        //             MovieId = Movie.Id,
+        //             MediaUid = mediaDto.Uid.ToString() // create a new media with a unique identifier and put it here
+        //         });
+        // }
 
         // Call the API to save the movie and upload files
         await movieApi.AddMovie(Movie);

@@ -26,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Medias\Development\unsafe_uploads\" />
     <Folder Include="Models\" />
     <Folder Include="wwwroot\Development\unsafe_uploads\" />

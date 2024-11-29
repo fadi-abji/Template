@@ -27,6 +27,8 @@ namespace BlazorWebAppWithIdentity
             builder.Services.AddScoped<IdentityRedirectManager>();
             builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
+            builder.Services.AddControllersWithViews();
+
             builder.Services.AddAuthentication(options =>
                 {
                     options.DefaultScheme = IdentityConstants.ApplicationScheme;
@@ -59,6 +61,9 @@ namespace BlazorWebAppWithIdentity
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton(new HttpClient());
 
+            builder.Services.AddHttpClient();
+
+
 
 
             var app = builder.Build();
@@ -87,7 +92,15 @@ namespace BlazorWebAppWithIdentity
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            app.UseRouting();
+
             app.UseAntiforgery();
+            app.UseAuthorization();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
