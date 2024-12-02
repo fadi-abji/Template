@@ -61,7 +61,7 @@
 
 @code {
     private List<File> files = new();
-    private List<UploadResult> uploadResults = new();
+    private List<UploadResultEventArgs> uploadResults = new();
     private int maxAllowedFiles = 3;
     private bool shouldRender;
 
@@ -133,7 +133,7 @@
                     await response.Content.ReadAsStreamAsync();
 
                 var newUploadResults = await JsonSerializer
-                    .DeserializeAsync<IList<UploadResult>>(responseStream, options);
+                    .DeserializeAsync<IList<UploadResultEventArgs>>(responseStream, options);
 
                 if (newUploadResults is not null)
                 {
@@ -145,8 +145,8 @@
         shouldRender = true;
     }
 
-    private static bool FileUpload(IList<UploadResult> uploadResults,
-        string? fileName, ILogger<FileUpload2> logger, out UploadResult result)
+    private static bool FileUpload(IList<UploadResultEventArgs> uploadResults,
+        string? fileName, ILogger<FileUpload2> logger, out UploadResultEventArgs result)
     {
         result = uploadResults.SingleOrDefault(f => f.FileName == fileName) ?? new();
 

@@ -2,6 +2,6 @@
 {
     public interface IMediaApi
     {
-        Task<Dto.Media> AddMedia();
+        Task AddMedia(Dto.Media media);
     }
 }

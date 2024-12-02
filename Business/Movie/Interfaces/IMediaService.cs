@@ -2,6 +2,7 @@
 {
     public interface IMediaService
     {
-        Task<Dto.Media> AddMedia();
+        Task AddMedia(Dto.Media media);
+        Task<Dto.Media> GetMediaByUid(Guid mediaUid);
     }
 }

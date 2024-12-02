@@ -12,17 +12,17 @@ namespace BlazorWebAppWithIdentity.Controllers
     public class MediaClientController(IWebHostEnvironment env, ILogger<MediaClientController> logger) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files)
+        public async Task<ActionResult<IList<UploadResultEventArgs>>> PostFile([FromForm] IEnumerable<IFormFile> files)
         {
             var maxAllowedFiles = 3;
             long maxFileSize = 1024 * 15;
             var filesProcessed = 0;
             var resourcePath = new Uri($"{Request.Scheme}://{Request.Host}/");
-            List<UploadResult> uploadResults = [];
+            List<UploadResultEventArgs> uploadResults = [];
 
             foreach (var file in files)
             {
-                var uploadResult = new UploadResult();
+                var uploadResult = new UploadResultEventArgs();
                 string trustedFileNameForFileStorage;
                 var untrustedFileName = file.FileName;
                 uploadResult.FileName = untrustedFileName;

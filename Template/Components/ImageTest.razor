@@ -1,0 +1,61 @@
+﻿@page "/imagetest"
+<h3>ImageTest</h3>
+
+
+@* <img src="@(GetMiddlewareUrl())" /> *@
+
+@code {
+
+    private List<MiddlewareInclude> includes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        includes = new List<MiddlewareInclude>()
+            {
+                new MiddlewareInclude(){ Uid="974E7684-7A0B-4F74-A4E8-F2B2195DE5B7" },
+                new MiddlewareInclude(){ Uid="B10161A0-5FC4-41EA-B9A1-D44AC83CFC2F" },
+                new MiddlewareInclude(){ Uid="0B97EFB2-5AAA-4B32-923F-75AEF23C3682" },
+                new MiddlewareInclude(){ Uid="01444BAD-03A5-4F9E-81EC-88AD6C53F81F" },
+                new MiddlewareInclude(){ Uid="BadArticleImage" },
+                new MiddlewareInclude(){ Uid="A65135CC-1A0E-4372-9FA5-4CFC85C0B9BE" },
+                new MiddlewareInclude(){ Uid="74738F17-DC1B-4DCE-B295-2912DE58E867" },
+                new MiddlewareInclude(){ Uid="AnotherBadArticle" },
+                new MiddlewareInclude(){ Uid="1CAA320A-7E6C-4B41-A7A7-3804F2F53F39" },
+                new MiddlewareInclude(){ Uid="MissingImage" },
+                new MiddlewareInclude(){ Uid="100% extract 1830 Heavy" },
+            };
+    }
+    public string GetMiddlewareUrl()
+    {
+        string result = "";
+        if (includes.Any(o => o.Include))
+        {
+            result = "/getimage/";
+            int addedCount = 0;
+            for (int i = 0; i < includes.Count; i++)
+            {
+                MiddlewareInclude include = includes[i];
+
+                if (include.Include)
+                {
+                    if (addedCount > 0)
+                    {
+                        result += "_";
+                    }
+
+                    addedCount++;
+                    result += include.Uid;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public class MiddlewareInclude
+    {
+        public string Uid { get; set; }
+        public bool Include { get; set; } = false;
+    }
+}

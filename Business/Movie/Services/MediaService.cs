@@ -19,24 +19,41 @@ namespace Business.Movie.Services
             this.dataTranslationService = dataTranslationService;
         }
 
-        public async Task<Dto.Media> AddMedia()
+        //public async Task AddMedia(Dto.Media media)
+        //{
+        //    using var context = dbFactory.CreateDbContext();
+        //    try
+        //    {
+        //        var mediaDto = new Dto.Media { Uid = new Guid() };
+
+        //        var mediaDal = dataTranslationService.ReverseMapData<Dal.Media, Dto.Media>(mediaDto);
+
+        //        context.Media.Add(mediaDal);
+
+        //        await context.SaveChangesAsync();
+
+        //        var returnMediaDal = context.Media.FirstOrDefault(mediaDal => mediaDal.Uid == mediaDto.Uid);
+
+        //        var returnMediaDto = dataTranslationService.MapData<Dto.Media, Dal.Media>(returnMediaDal);
+
+        //        return returnMediaDto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        public async Task AddMedia(Dto.Media media)
         {
             using var context = dbFactory.CreateDbContext();
             try
             {
-                var mediaDto = new Dto.Media { Uid = new Guid() };
-
-                var mediaDal = dataTranslationService.ReverseMapData<Dal.Media, Dto.Media>(mediaDto);
+                var mediaDal = dataTranslationService.MapData<Dal.Media, Dto.Media>(media);
 
                 context.Media.Add(mediaDal);
 
                 await context.SaveChangesAsync();
-
-                var returnMediaDal = context.Media.FirstOrDefault(mediaDal => mediaDal.Uid == mediaDto.Uid);
-
-                var returnMediaDto = dataTranslationService.MapData<Dto.Media, Dal.Media>(returnMediaDal);
-
-                return returnMediaDto;
             }
             catch (Exception ex)
             {
@@ -44,5 +61,21 @@ namespace Business.Movie.Services
             }
         }
 
+        public async Task<Dto.Media> GetMediaByUid(Guid mediaUid)
+        {
+            using var context = dbFactory.CreateDbContext();
+            try
+            {
+                var mediaDal = context.Media.FirstOrDefault(mediaDal => mediaDal.Uid == mediaUid);
+
+                var mediaDto = dataTranslationService.MapData<Dto.Media, Dal.Media>(mediaDal);
+
+                return mediaDto;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

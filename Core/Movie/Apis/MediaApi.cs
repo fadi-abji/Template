@@ -13,9 +13,9 @@ namespace Core.Movie.Apis
             _httpClient = httpClient;
         }
 
-        public async Task<Dto.Media> AddMedia()
+        public async Task AddMedia(Dto.Media media)
         {
-            return await _httpClient.GetFromJsonAsync<Dto.Media>($"Data/Media/AddMedia");
+            await _httpClient.PostAsJsonAsync<Dto.Media>($"Data/Media/AddMedia", media);
         }
     }
 }

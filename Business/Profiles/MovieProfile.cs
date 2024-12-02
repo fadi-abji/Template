@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using DalMedia = Dal.Media;
 using DalObje = Dal.Movie;
-using DtoMedia = Dto.Media;
 using DtoObje = Dto.Movie;
 using MovieMediaDal = Dal.MovieMedia;
 using MovieMediaDto = Dto.MovieMedia;
@@ -26,9 +24,16 @@ namespace Business.Profiles
     {
         public MediaProfile()
         {
-            // Map Media DTO to DAL and reverse
-            CreateMap<DtoMedia, DalMedia>()
-                .ReverseMap();
+            // Map DAL to DTO
+            CreateMap<Dal.Media, Dto.Media>()
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(Dal => Dal.Description))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.AlternateText, opt => opt.MapFrom(src => src.AlternateText))
+                .ForMember(dest => dest.FileName, opt => opt.MapFrom(src => src.FileName))
+                .ForMember(dest => dest.OriginalFilename, opt => opt.MapFrom(src => src.OriginalFilename))
+                .ForMember(dest => dest.Width, opt => opt.MapFrom(src => src.Width))
+                .ForMember(dest => dest.Height, opt => opt.MapFrom(src => src.Height))
+                .ReverseMap(); // Enables mapping from DTO back to DAL
         }
     }
 }

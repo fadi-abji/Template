@@ -1,5 +1,6 @@
 ﻿using Business.Movie.Interfaces;
 using Core.Movie.Interfaces;
+using Dto;
 
 namespace Business.Movie.Apis
 {
@@ -11,9 +12,9 @@ namespace Business.Movie.Apis
             this.mediaService = mediaService;
         }
 
-        public Task<Dto.Media> AddMedia()
+        public async Task AddMedia(Media media)
         {
-            return mediaService.AddMedia();
+            await mediaService.AddMedia(media);
         }
     }
 }

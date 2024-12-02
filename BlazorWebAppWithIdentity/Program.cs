@@ -9,6 +9,8 @@ using Dal.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Middleware;
 
 namespace BlazorWebAppWithIdentity
 {
@@ -93,6 +95,10 @@ namespace BlazorWebAppWithIdentity
 
             app.UseStaticFiles();
 
+            //ImageMiddleware registration
+            ImageMiddlewareOptions? options = app.Services.GetService<IOptions<ImageMiddlewareOptions>>()?.Value;
+            app.UseMiddleware<ImageMiddleware>(options);
+
             app.UseRouting();
 
             app.UseAntiforgery();
@@ -108,6 +114,7 @@ namespace BlazorWebAppWithIdentity
 
             // Add additional endpoints required by the Identity /Account Razor components.
             app.MapAdditionalIdentityEndpoints();
+
 
             app.Run();
         }

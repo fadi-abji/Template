@@ -17,10 +17,10 @@ namespace Business.Movie.Controllers
         }
 
         [HttpGet]
-        public async Task<Dto.Media> AddMedia()
+        public async Task AddMedia(Dto.Media media)
         {
             logger.LogTrace(string.Format("Data/Media/AddMedia"));
-            return await mediaService.AddMedia();
+            await mediaService.AddMedia(media);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using Core.Movie.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -6,23 +7,21 @@ namespace BlazorWebAppWithIdentity.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FilesaveController(
-      IHostEnvironment env, ILogger<FilesaveController> logger)
-      : ControllerBase
+    public class FilesaveController(IHostEnvironment env, ILogger<FilesaveController> logger, IMediaApi mediaApi) : ControllerBase
     {
         [HttpPost]
-        public async Task<ActionResult<IList<UploadResult>>> PostFile(
+        public async Task<ActionResult<IList<UploadResultEventArgs>>> PostFile(
             [FromForm] IEnumerable<IFormFile> files)
         {
             var maxAllowedFiles = 3;
-            long maxFileSize = 1024 * 15;
+            long maxFileSize = 1024 * 1024 * 15;
             var filesProcessed = 0;
             var resourcePath = new Uri($"{Request.Scheme}://{Request.Host}/");
-            List<UploadResult> uploadResults = [];
+            List<UploadResultEventArgs> uploadResults = [];
 
             foreach (var file in files)
             {
-                var uploadResult = new UploadResult();
+                var uploadResult = new UploadResultEventArgs();
                 string trustedFileNameForFileStorage;
                 var untrustedFileName = file.FileName;
                 uploadResult.FileName = untrustedFileName;
@@ -48,7 +47,8 @@ namespace BlazorWebAppWithIdentity.Controllers
                     {
                         try
                         {
-                            trustedFileNameForFileStorage = Path.GetRandomFileName();
+                            Guid meidUid = Guid.NewGuid();
+                            trustedFileNameForFileStorage = meidUid.ToString() + Path.GetExtension(file.FileName);
                             var path = Path.Combine(env.ContentRootPath,
                                 env.EnvironmentName, "unsafe_uploads",
                                 trustedFileNameForFileStorage);
@@ -60,6 +60,19 @@ namespace BlazorWebAppWithIdentity.Controllers
                                 trustedFileNameForDisplay, path);
                             uploadResult.Uploaded = true;
                             uploadResult.StoredFileName = trustedFileNameForFileStorage;
+
+                            var media = new Dto.Media
+                            {
+                                Uid = meidUid,
+                                FileName = trustedFileNameForFileStorage,
+                                OriginalFilename = file.FileName,
+                                Name = trustedFileNameForFileStorage,
+                                AlternateText = "default",
+                                Description = "default",
+                                Width = 500,
+                                Height = 500
+                            };
+                            await mediaApi.AddMedia(media);
                         }
                         catch (IOException ex)
                         {

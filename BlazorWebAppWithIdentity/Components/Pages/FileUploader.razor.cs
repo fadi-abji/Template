@@ -102,7 +102,7 @@ namespace BlazorWebAppWithIdentity.Components.Pages
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var uploadResults = await response.Content.ReadFromJsonAsync<List<UploadResult>>();
+                    var uploadResults = await response.Content.ReadFromJsonAsync<List<UploadResultEventArgs>>();
                     Logger.LogInformation("Upload completed with {Count} results", uploadResults?.Count ?? 0);
                     // Handle success, e.g., notify user, update UI, etc.
                 }
