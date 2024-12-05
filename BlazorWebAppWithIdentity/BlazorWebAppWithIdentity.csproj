@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.433" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
@@ -23,13 +24,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\Configurations\Configurations.csproj" />
     <ProjectReference Include="..\Middleware\Middleware.csproj" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <Folder Include="Medias\Development\unsafe_uploads\" />
     <Folder Include="Models\" />
-    <Folder Include="wwwroot\Development\unsafe_uploads\" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Content Update="wwwroot\app.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

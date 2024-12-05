@@ -25,11 +25,15 @@ namespace Dal
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
-
         [Required]
         [RegularExpression(@"^(G|PG|PG-13|R|NC-17)$")]
         public string? Rating { get; set; }
-
+        public int CategoryLevel1Id { get; set; }
+        public int CategoryLevel2Id { get; set; }
+        public int CategoryLevel3Id { get; set; }
+        public virtual CategoryLevel1 CategoryLevel1 { get; set; }
+        public virtual CategoryLevel2 CategoryLevel2 { get; set; }
+        public virtual CategoryLevel3 CategoryLevel3 { get; set; }
         public virtual ICollection<MovieMedia> MovieMedias { get; set; } = null!;
     }
 }

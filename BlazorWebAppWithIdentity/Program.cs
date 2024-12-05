@@ -4,6 +4,7 @@ using Business.DataBase;
 using Business.Movie.Apis;
 using Business.Movie.Interfaces;
 using Business.Movie.Services;
+using Configurations;
 using Core.Movie.Interfaces;
 using Dal.Data;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -18,11 +19,14 @@ namespace BlazorWebAppWithIdentity
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            //web optimizer registration    
+            builder.Services.ConfigureWebOptimizer(builder.Environment);
 
             builder.Services.AddCascadingAuthenticationState();
             builder.Services.AddScoped<IdentityUserAccessor>();
@@ -93,6 +97,10 @@ namespace BlazorWebAppWithIdentity
 
             app.UseHttpsRedirection();
 
+            //Web optimizer registration    
+            //Before app.UseStaticFiles();
+            app.UseWebOptimizer();
+
             app.UseStaticFiles();
 
             //ImageMiddleware registration
@@ -104,6 +112,7 @@ namespace BlazorWebAppWithIdentity
             app.UseAntiforgery();
             app.UseAuthorization();
 
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -112,7 +121,7 @@ namespace BlazorWebAppWithIdentity
                 .AddInteractiveServerRenderMode();
 
 
-            // Add additional endpoints required by the Identity /Account Razor components.
+            //Add additional endpoints required by the Identity / Account Razor components.
             app.MapAdditionalIdentityEndpoints();
 
 
